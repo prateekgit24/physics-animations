@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinematics Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .input-container {
+      margin-bottom: 20px;
+    }
+    label {
+      margin-right: 10px;
+    }
+    input {
+      margin-right: 20px;
+      padding: 5px;
+      width: 80px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    canvas {
+      border: 1px solid #000;
+      background-color: #e0f7fa;
+      margin-bottom: 20px;
+    }
+    .results {
+      font-size: 1.2em;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      display: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Kinematics Simulation: Projectile Motion</h1>
+    <div class="input-container">
+      <label for="angle">Angle (degrees):</label>
+      <input type="number" id="angle" min="0" max="90" value="45">
+      <label for="speed">Initial Speed (m/s):</label>
+      <input type="number" id="speed" min="0" value="20">
+      <label for="height">Initial Height (m):</label>
+      <input type="number" id="height" min="0" value="10">
+      <button id="simulate">Simulate</button>
+    </div>
+    <canvas id="simulationCanvas"></canvas>
+    <div class="results">
+      <p>Range: <span id="range">0</span> m</p>
+      <p>Time of Flight: <span id="time">0</span> s</p>
+      <p>Maximum Height: <span id="maxHeight">0</span> m</p>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+  <script>
+    const canvas = document.getElementById('simulationCanvas');
+    const ctx = canvas.getContext('2d');
+    const angleInput = document.getElementById('angle');
+    const speedInput = document.getElementById('speed');
+    const heightInput = document.getElementById('height');
+    const rangeOutput = document.getElementById('range');
+    const timeOutput = document.getElementById('time');
+    const maxHeightOutput = document.getElementById('maxHeight');
+    const simulateButton = document.getElementById('simulate');
+    const tooltip = document.getElementById('tooltip');
+    
+    canvas.width = 800;
+    canvas.height = 400;
+    const g = 9.81;
+    const scale = 10;
+    let startTime;
+
+    function drawGrid() {
+      ctx.strokeStyle = '#ccc';
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x < canvas.width; x += scale * 5) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += scale * 5) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+    }
+
+    function drawClock() {
+      if (startTime) {
+        let elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(canvas.width - 80, 10, 70, 20);
+        ctx.fillStyle = 'white';
+        ctx.fillText(elapsed + ' s', canvas.width - 75, 25);
+      }
+    }
+
+    function simulateProjectile() {
+      const angle = parseFloat(angleInput.value) * (Math.PI / 180);
+      const speed = parseFloat(speedInput.value);
+      const initialHeight = parseFloat(heightInput.value);
+      const vx = speed * Math.cos(angle);
+      const vy = speed * Math.sin(angle);
+      const timeOfFlight = (vy + Math.sqrt(vy ** 2 + 2 * g * initialHeight)) / g;
+      const range = vx * timeOfFlight;
+      const maxHeight = initialHeight + (vy ** 2) / (2 * g);
+      rangeOutput.textContent = range.toFixed(2);
+      timeOutput.textContent = timeOfFlight.toFixed(2);
+      maxHeightOutput.textContent = maxHeight.toFixed(2);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawGrid();
+      startTime = Date.now();
+      let t = 0;
+      function draw() {
+        if (t <= timeOfFlight) {
+          let x = vx * t;
+          let y = initialHeight + vy * t - 0.5 * g * t ** 2;
+          ctx.beginPath();
+          ctx.arc(x * scale, canvas.height - y * scale, 5, 0, 2 * Math.PI);
+          ctx.fillStyle = 'red';
+          ctx.fill();
+          drawClock();
+          t += 0.1;
+          requestAnimationFrame(draw);
+        } else {
+          ctx.strokeStyle = 'blue';
+          ctx.beginPath();
+          ctx.moveTo(range * scale, 0);
+          ctx.lineTo(range * scale, canvas.height);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height - maxHeight * scale);
+          ctx.lineTo(canvas.width, canvas.height - maxHeight * scale);
+          ctx.stroke();
+        }
+      }
+      draw();
+    }
+
+    canvas.addEventListener('mousemove', function (event) {
+      if (event.offsetY < canvas.height - maxHeightOutput.textContent * scale + 5 &&
+          event.offsetY > canvas.height - maxHeightOutput.textContent * scale - 5) {
+        tooltip.style.left = event.pageX + 'px';
+        tooltip.style.top = event.pageY - 20 + 'px';
+        tooltip.textContent = 'Time to max height: ' + (speedInput.value * Math.sin(angleInput.value * Math.PI / 180) / g).toFixed(2) + ' s';
+        tooltip.style.display = 'block';
+      } else {
+        tooltip.style.display = 'none';
+      }
+    });
+
+    simulateButton.addEventListener('click', simulateProjectile);
+  </script>
+</body>
+</html>
