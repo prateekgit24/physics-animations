@@ -1,3 +1,144 @@
-<html><head><title>physics</title></head><body>
-   <a href="mixed.html"> <button>kinematics</button></a>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: #0d1117;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(270deg, #1f3b73, #0a192f, #1f3b73);
+            background-size: 400% 400%;
+            animation: gradientBG 6s infinite alternate;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.7);
+        }
+
+        /* Navigation */
+        nav {
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #00e6ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff4dd2;
+        }
+
+        /* Main Content */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 50px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .topic-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 25px rgba(255, 77, 210, 0.7);
+        }
+
+        .topic-card h2 {
+            color: #00e6ff;
+        }
+        .topic-link {
+    text-decoration: none; /* Remove default underline */
+    color: inherit; /* Keep text color the same */
+    display: block; /* Ensure full card is clickable */
+}
+
+        /* Footer */
+        footer {
+            background: #0a192f;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            bottom: 0;
+            color: #00e6ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Physics Explorer</h1>
+        <nav>
+            <a href="mixed.html">Kinematics</a>
+            <a href="#dynamics">Dynamics</a>
+            <a href="#energy">Energy</a>
+            <a href="#waves">Waves</a>
+            <a href="#optics">Optics</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <a href="mixed.html" class="topic-link">  <div class="topic-card" id="kinematics">
+            <h2>Kinematics</h2>
+            <p>Explore motion, velocity, and acceleration.</p>
+        </div></a>
+        <div class="topic-card" id="dynamics">
+            <h2>Dynamics</h2>
+            <p>Learn about forces and Newton’s Laws.</p>
+        </div>
+        <div class="topic-card" id="energy">
+            <h2>Energy</h2>
+            <p>Understand work, energy, and power.</p>
+        </div>
+        <div class="topic-card" id="waves">
+            <h2>Waves</h2>
+            <p>Dive into sound and light waves.</p>
+        </div>
+        <div class="topic-card" id="optics">
+            <h2>Optics</h2>
+            <p>Discover the science of light and lenses.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Physics Explorer. All rights reserved.</p>
+    </footer>
+</body>
+</html>
