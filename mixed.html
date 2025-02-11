@@ -7,48 +7,151 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-color: #0d1117;
+    
+    margin: 0;
+    padding: 0;
+    
       height: 100vh;
+      flex-direction: column;
     }
+    header {
+    background: linear-gradient(90deg, #1f3b73, #0a192f);
+    color: rgb(157, 191, 220);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 255, 0.2);
+  
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #00e6ff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff4dd2;
+}
+.sidebar {
+    width: 20%;
+    background: linear-gradient(0deg,orange, yellow, green, blue, indigo);
+    padding: 20px;
+    position: relative;
+    height: calc(100vh-110px);
+    box-shadow: 2px 0px 10px rgba(0, 255, 255, 0.2);
+    overflow-y: auto;
+    flex: 1;
+    max-width: 250px;
+
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #00e6ff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background: #00e6ff;
+    color: #161b22;
+    border-radius: 5px;
+}
+
     .container {
-      background-color: #fff;
+      background-color: #070707;
+      color: #00e6ff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       text-align: center;
+      flex:1;
+      display: flex;
+      padding: 20px;
     }
+    main{
+      display: flex;
+  flex-direction: column;
+  margin-left: 200px;
+    }
+
     .input-container {
       margin-bottom: 20px;
+      display: flex;     
+      flex-direction: column;
+       align-items: center;
+
+    }
+    .values{
+      display: flex;
     }
     label {
       margin-right: 10px;
     }
     input {
-      margin-right: 20px;
+      text-align: center;
       padding: 5px;
       width: 80px;
     }
-    button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
+    
+   
+    #simulate {
+    background: linear-gradient(90deg, #00e6ff, #ff4dd2);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.6);
+    margin-top: 15px;
+}
+
+#simulate:hover {
+    box-shadow: 0px 0px 40px rgba(255, 77, 210, 0.8);
+    transform: scale(1.15);
+}
     canvas {
-      border: 1px solid #000;
-      background-color: #e0f7fa;
-      margin-bottom: 20px;
+      border: 5px solid #425d97;
+      background: radial-gradient(circle, rgb(129, 182, 5), rgb(8, 206, 91), rgb(5, 176, 173), rgb(29, 157, 217), rgb(2, 27, 58));
+      display: block; 
+      margin:20px auto;
     }
     .results {
       font-size: 1.2em;
+      text-align: center;
+      margin-top: 10px;
+      display: flex;
+      gap: 25px;
+    margin-left: 150px;
     }
     .tooltip {
       position: absolute;
@@ -56,31 +159,65 @@
       color: white;
       padding: 5px;
       border-radius: 5px;
-      display: none;
+      display: flex;
       font-size: 14px;
     }
+    footer {
+    background: #0a192f;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    color: #00e6ff;
+}
   </style>
 </head>
-<body>
+<body> <header>
+  <h1>Kinematics & Newton’s Laws</h1>
+  <nav>
+      <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="#">Theory</a></li>
+          <li><a href="#">Animation</a></li>
+          <li><a href="#">Practice Problems</a></li>
+          <li><a href="#">Ask Questions</a></li>
+      </ul>
+  </nav>
+</header>
   <div class="container">
-    <h1>Kinematics Simulation: Projectile Motion</h1>
+    <aside class="sidebar">
+      <ul>
+          <li><a href="#">Theory</a></li>
+          <li><a href="#">Animation</a></li>
+          <li><a href="#">Practice Problems</a></li>
+          <li><a href="#">Ask Questions</a></li>
+      </ul>
+  </aside>
+  
+ <main>
     <div class="input-container">
+      <h2>Welcome to Kinematics & Newton’s Laws Simulation</h2><div class="values">
       <label for="angle">Angle (degrees):</label>
       <input type="number" id="angle" min="0" max="90" value="45">
       <label for="speed">Initial Speed (m/s):</label>
       <input type="number" id="speed" min="0" value="20">
       <label for="height">Initial Height (m):</label>
-      <input type="number" id="height" min="0" value="10">
+      <input type="number" id="height" min="0" value="10"></div>
       <button id="simulate">Simulate</button>
     </div>
     <canvas id="simulationCanvas"></canvas>
     <div class="results">
-      <p>Range: <span id="range">0</span> m</p>
-      <p>Time of Flight: <span id="time">0</span> s</p>
+      <p>Range: <span id="range">0</span> m,</p>
+      <p>Time of Flight: <span id="time">0</span> s,</p>
       <p>Maximum Height: <span id="maxHeight">0</span> m</p>
     </div>
     <div class="tooltip" id="tooltip"></div>
   </div>
+</main>
+  <footer>
+    <p>&copy; 2025 Kinematics Learning. All rights reserved.</p>
+</footer>
   <script>
     const canvas = document.getElementById('simulationCanvas');
     const ctx = canvas.getContext('2d');
@@ -126,7 +263,7 @@
       }
     }
 
-    function simulateProjectile() {
+   /* function simulateProjectile() {
       const angle = parseFloat(angleInput.value) * (Math.PI / 180);
       const speed = parseFloat(speedInput.value);
       const initialHeight = parseFloat(heightInput.value);
@@ -151,7 +288,7 @@
           ctx.fillStyle = 'red';
           ctx.fill();
           drawClock();
-          t += 0.1;
+          t += 0.0166;
           requestAnimationFrame(draw);
         } else {
           ctx.strokeStyle = 'blue';
@@ -166,7 +303,130 @@
         }
       }
       draw();
+    }*/
+   /* function simulateProjectile() {
+    const angle = parseFloat(angleInput.value) * (Math.PI / 180);
+    const speed = parseFloat(speedInput.value);
+    const initialHeight = parseFloat(heightInput.value);
+    const vx = speed * Math.cos(angle);
+    const vy = speed * Math.sin(angle);
+    const timeOfFlight = (vy + Math.sqrt(vy ** 2 + 2 * g * initialHeight)) / g;
+    const range = vx * timeOfFlight;
+    const maxHeight = initialHeight + (vy ** 2) / (2 * g);
+    
+    rangeOutput.textContent = range.toFixed(2);
+    timeOutput.textContent = timeOfFlight.toFixed(2);
+    maxHeightOutput.textContent = maxHeight.toFixed(2);
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid();
+    
+    startTime = Date.now();  // Record the start time
+
+    function draw() {
+        let elapsed = (Date.now() - startTime) / 1000; // Get elapsed time in seconds
+
+        if (elapsed <= timeOfFlight) {
+            let x = vx * elapsed;
+            let y = initialHeight + vy * elapsed - 0.5 * g * elapsed ** 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+
+            ctx.beginPath();
+            ctx.arc(x * scale, canvas.height - y * scale, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+
+            drawClock(elapsed);
+            requestAnimationFrame(draw);
+        } else {
+            ctx.strokeStyle = 'blue';
+            ctx.beginPath();
+            ctx.moveTo(range * scale, 0);
+            ctx.lineTo(range * scale, canvas.height);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - maxHeight * scale);
+            ctx.lineTo(canvas.width, canvas.height - maxHeight * scale);
+            ctx.stroke();
+        }
     }
+
+    draw();
+}*/
+function simulateProjectile() {
+    const angle = parseFloat(angleInput.value) * (Math.PI / 180);
+    const speed = parseFloat(speedInput.value);
+    const initialHeight = parseFloat(heightInput.value);
+    const vx = speed * Math.cos(angle);
+    const vy = speed * Math.sin(angle);
+    const timeOfFlight = (vy + Math.sqrt(vy ** 2 + 2 * g * initialHeight)) / g;
+    const range = vx * timeOfFlight;
+    const maxHeight = initialHeight + (vy ** 2) / (2 * g);
+
+    rangeOutput.textContent = range.toFixed(2);
+    timeOutput.textContent = timeOfFlight.toFixed(2);
+    maxHeightOutput.textContent = maxHeight.toFixed(2);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid();
+
+    startTime = Date.now(); // Record start time
+    let recordedFrames = []; // Array to store positions every 0.1s
+    let lastRecordedTime = 0; // Last time we stored a point
+
+    function draw() {
+        let elapsed = (Date.now() - startTime) / 1000; // Get elapsed time in seconds
+
+        if (elapsed <= timeOfFlight) {
+            let x = vx * elapsed;
+            let y = initialHeight + vy * elapsed - 0.5 * g * elapsed ** 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+
+            // Draw the projectile
+            ctx.beginPath();
+            ctx.arc(x * scale, canvas.height - y * scale, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+
+            drawClock(elapsed);
+
+            // Record position every 0.1 seconds
+            if (elapsed - lastRecordedTime >= 0.1) {
+                recordedFrames.push({ x: x * scale, y: canvas.height - y * scale });
+                lastRecordedTime = elapsed;
+            }
+
+            // Draw recorded points on the graph
+            ctx.fillStyle = 'blue';
+            recordedFrames.forEach(point => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(draw);
+        } else {
+            // Draw the final trajectory markers
+            ctx.strokeStyle = 'blue';
+            ctx.beginPath();
+            ctx.moveTo(range * scale, 0);
+            ctx.lineTo(range * scale, canvas.height);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - maxHeight * scale);
+            ctx.lineTo(canvas.width, canvas.height - maxHeight * scale);
+            ctx.stroke();
+        }
+    }
+
+    draw();
+}
 
     canvas.addEventListener('mousemove', function (event) {
       if (event.offsetY < canvas.height - maxHeightOutput.textContent * scale + 5 &&
